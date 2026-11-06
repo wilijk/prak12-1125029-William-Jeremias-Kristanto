@@ -1,43 +1,38 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
     String name;
-    List<User> contacts;
-    
-    public User (String name){
+    ChatRoom chatRoom;
+
+    public User(String name) {
         this.name = name;
-        this.contacts = new ArrayList<>();
     }
-    
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    
-    public List<User> getContacts() {
-        return contacts;
+
+    public ChatRoom getChatRoom() {
+        return chatRoom;
     }
 
-    public void setContacts(List<User> contacts) {
-        this.contacts = contacts;
+    public void setChatRoom(ChatRoom chatRoom) {
+        this.chatRoom = chatRoom;
     }
 
-    public void sendMessage(User receiver, String message){
-        System.out.println("[" + this.name + " -> " + receiver.getName() + "]: " + message);
-        receiver.receiveMessage(receiver, message);
-    }
-    
-    public void receiveMessage(User sender, String message){
-        System.out.println("[" + this.name + "] Menerima pesan dari "+ sender.getName() + ": " + message);
+    public void send(String message) {
+        if (chatRoom != null)
+            chatRoom.sendBroatcast(this, message);
+        else
+            System.out.println("Tidak masuk grup! TERKUCILKAN");
     }
 
-    public void addContact(User user){
-        contacts.add(user);
+    public void receiveMessage(User sender, String message) {
+        System.out.println("[" + this.name + "] Menerima pesan dari " + sender.getName() + ": " + message);
     }
+
 }
